@@ -17,20 +17,11 @@ if ($conn->connect_error) {
 }
 
 $sql = "SELECT * FROM data ORDER BY data.time DESC LIMIT 10";
-
-
 $sqls = $conn->query($sql);
-
 	while($row = $sqls->fetch_assoc())
 	{
-		
 		$results2[]=(double)$row['temperature'];
 	}
-
-
-$ydata = array(trim($results[0]),trim($results[1]),$results[2],$results[3],$results[4],$results[5]);
-// Some data
-//$ydata = array(11,3,8,12,5,1,9,13,5,7);
 
 // Create the graph. These two calls are always required
 $graph = new Graph(800,600);
