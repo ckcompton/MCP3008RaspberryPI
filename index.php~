@@ -1,0 +1,86 @@
+    <html>
+    <head>
+      <meta name="viewport" content="width=device-width" />
+      <title>Reading Voltage from Database</title>
+    </head>
+    <body>
+     <?php
+
+require_once ('src/jpgraph.php');
+require_once ('src/jpgraph_line.php');
+
+$servername = "localhost";
+$username = "root";
+$password = "football12";
+$dbname = "readings";
+$conn = new mysqli($servername, $username, $password, $dbname);
+     // Check connectionwe fawefawef
+if ($conn->connect_error) {
+ die("Connection failed: " . $conn->connect_error);
+}
+$sql = "SELECT data.temperature FROM data ORDER BY data.time DESC LIMIT 10";
+
+
+$result = $conn->query($sql);
+$result2 = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+   // output data of each row
+ $results= array();
+ $index=0;
+ while($row = $result2->fetch_assoc())
+ {
+   $results[$index] = (double)$row["temperature"];
+   $index++;
+ }
+
+ echo "Results[0]" . (double)$results[0] ."<br>";
+ echo "Results[1]" . (double)$results[1] ."<br>";
+ echo "Results[2]" . (double)$results[2] ."<br>";
+ echo "Results[3]" . (double)$results[3] ."<br>";
+ echo "Results[4]" . (double)$results[4] ."<br>";
+ echo "Results[5]" . (double)$results[5] ."<br>";
+
+ while($row = $result->fetch_assoc()) {
+   echo "Voltage: " . $row["temperature"]. "<br>";
+ }
+} else {
+  echo "0 results";
+}
+$sql = "SELECT table_name AS 'data', ROUND(((data_length + index_length) / 1024 / 1024), 2) AS 'Size (MB)' FROM information_schema.TABLES WHERE table_schema = 'readings' ORDER BY (data_length + index_length) DESC;";
+$sizeOfTable = $conn->query($sql);
+if ($sizeOfTable->num_rows > 0) {
+   // output data of each row
+ while($row = $sizeOfTable->fetch_assoc()) {
+   echo "Size of database " . $row["Size (MB)"]. "MB". "<br>";
+ }
+} else {
+  echo "0 results";
+}
+
+$conn->close();
+/*
+// Some data
+$ydata = array(11,3,8,12,5,1,9,13,5,7);
+
+// Create the graph. These two calls are always required
+$graph = new Graph(350,250);
+$graph->SetScale('textlin');
+
+// Create the linear plot
+$lineplot=new LinePlot($ydata);
+$lineplot->SetColor('blue');
+
+// Add the plot to the graph
+$graph->Add($lineplot);
+
+// Display the graph
+$graph->Stroke();
+
+*/
+
+
+?>
+<!-- <img src="index.php"> -->
+</body>
+</html>

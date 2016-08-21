@@ -7,6 +7,7 @@ require_once ('src/jpgraph_line.php');
      $password = "football12";
      $dbname = "readings";
      $conn = new mysqli($servername, $username, $password, $dbname);
+
      // Check connectionwe fawefawef
      $results= array();
      if ($conn->connect_error) {
@@ -14,9 +15,8 @@ require_once ('src/jpgraph_line.php');
        die("Connection failed: " . $conn->connect_error);
      }
      
-     $sql = "SELECT * FROM data";
-     $checkquestion = $conn->query("SELECT data.temperature FROM data ORDER BY data.time DESC LIMIT 10");
-     	while($row = mysql_fetch_array($sql))
+     $sql = mysql_query("SELECT * FROM data ORDER BY data.time DESC LIMIT 10");
+     while($row = mysql_fetch_row($sql))
 	{
    $results[] = $row['temperature'];
 	}
@@ -28,53 +28,30 @@ require_once ('src/jpgraph_line.php');
 	if ($checkquestion) {
     $results[1]=20.0;
 	}
-	$checkquestion = mysql_query("SELECT data.temperature FROM data ORDER BY data.time DESC LIMIT 10");
-     if(mysql_num_rows($checkquestion)>0){
-     	$results[0]=5.0;
-     }
-     else{
-	while($row = mysql_fetch_array($sql))
-	{
-   $results[] = $row['temperature'];
+	if (!$sql) {
+    $results[3]=30.0;
 	}
-}
-$datay1 = array((double)$results[0],(double)$results[1],(double)$results[2],(double)$results[3]);
+	if ($sql) {
+    $results[1]=100.0;
+	}
 
 
-// Setup the graph
-$graph = new Graph(300,250);
-$graph->SetScale("textlin");
+//$ydata = array((double)$results[0],(double)$results[1],(double)$results[2],(double)$results[3],(double)$results[4],(double)$results[5]);
+// Some data
+$ydata = array(11,3,8,12,5,1,9,13,5,7);
 
-$theme_class=new UniversalTheme;
+// Create the graph. These two calls are always required
+$graph = new Graph(350,250);
+$graph->SetScale('textlin');
 
-$graph->SetTheme($theme_class);
-$graph->img->SetAntiAliasing(false);
-$graph->title->Set('Filled Y-grid');
-$graph->SetBox(false);
+// Create the linear plot
+$lineplot=new LinePlot($ydata);
+$lineplot->SetColor('blue');
 
-$graph->img->SetAntiAliasing();
+// Add the plot to the graph
+$graph->Add($lineplot);
 
-$graph->yaxis->HideZeroLabel();
-$graph->yaxis->HideLine(false);
-$graph->yaxis->HideTicks(false,false);
-
-$graph->xgrid->Show();
-$graph->xgrid->SetLineStyle("solid");
-$graph->xaxis->SetTickLabels(array('A','B','C','D'));
-$graph->xgrid->SetColor('#E3E3E3');
-
-// Create the first line
-$p1 = new LinePlot($datay1);
-$graph->Add($p1);
-$p1->SetColor("#6495ED");
-$p1->SetLegend('Line 1');
-
-
-
-$graph->legend->SetFrameWeight(1);
-
-// Output line
+// Display the graph
 $graph->Stroke();
-
 ?>
 
