@@ -4,6 +4,7 @@
       <title>Reading Voltage from Database</title>
     </head>
     <body>
+    <img src="graph.php"> 
      <?php
 
      require_once ('src/jpgraph.php');
@@ -46,41 +47,10 @@
 }
 
 $conn->close();
-//<img src="graph.php"> 
 
- /*
-
- $sqls = $conn->query($sql);
-for($i=0; $i<=($sqls->num_rows); $i++)
-{
-  while($row = $sqls->fetch_assoc())
- {
-   $results[i] = $row['temperature'];
-   //echo $row['temperature'] . "<br>";
-   echo $results[i] . "<br>";
-   }
- }
-
- echo "Results[0]" . (double)$results[0] ."<br>";
- echo "Results[1]" . (double)$results[1] ."<br>";
- echo "Results[2]" . (double)$results[2] ."<br>";
- echo "Results[3]" . (double)$results[3] ."<br>";
- echo "Results[4]" . (double)$results[4] ."<br>";
- echo "Results[5]" . (double)$results[5] ."<br>";
-
-  while($row = mysql_fetch_assoc($sql))
- {
-   $results[] = $row['temperature'];
-   echo $row['temperature'] . "<br>";
- }
- if (!mysql_select_db("readings")) {
-    echo "Unable to select mydbname: " . mysql_error();
-    exit;
-}
-*/
 
 ?>
-<img src="graph.php"> 
+
 </body>
 </html>
 

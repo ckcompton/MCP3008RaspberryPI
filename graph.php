@@ -34,7 +34,10 @@ $lineplot->SetColor('blue');
 
 // Add the plot to the graph
 $graph->Add($lineplot);
-
+$lineplot->value->SetFont(FF_FONT1,FS_BOLD,12);
+$graph->title->Set("Last 10 Voltage Recordings from Raspberry PI MCP3008");
+$graph->yaxis->title->Set("Voltage (V)");
+$graph->xaxis->title->Set("Recording Number");
 // Display the graph
 $graph->Stroke();
 ?>
