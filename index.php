@@ -3,8 +3,7 @@
       <meta name="viewport" content="width=device-width" />
       <title>Reading Voltage from Database</title>
     </head>
-    <body>
-
+    <body> 
 
     <img src="graph.php"> 
      
